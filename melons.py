@@ -1,5 +1,8 @@
 """This file should have our order classes in it."""
 
+from random import choice 
+
+
 class AbstractMelonOrder(object):
     """This is our superclass"""
 
@@ -10,10 +13,16 @@ class AbstractMelonOrder(object):
         self.qty = qty
         self.shipped = False
 
+    def get_base_price(self):
+        """ randomly choose base_price from 5-9 """
+
+        random_base_price = choice(range(5,9))
+        return random_base_price
+
     def get_total(self):
         """Calculate price."""
 
-        base_price = 5
+        base_price = self.get_base_price()
         if self.species == "Christmas melon":
             base_price = 1.5 * base_price
 
@@ -23,6 +32,7 @@ class AbstractMelonOrder(object):
 
         return total
 
+ 
     def mark_shipped(self):
         """Set shipped to true."""
 
@@ -32,9 +42,10 @@ class AbstractMelonOrder(object):
 class GovernmentMelonOrder(AbstractMelonOrder):
     """A Government (in the US) melon order."""
 
-    def __init__(self, species, qty, passed_inspection):
+    def __init__(self, species, qty):
         """Initialize melon order attributes"""
 
+        self.order_type = 'domestic'
         self.passed_inspection = False
         self.tax = 0
 
